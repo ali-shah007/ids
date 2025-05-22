@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import MainMenu from "./Components/MainMenu";
+import WeaponDetectionHighAccuracy from "./Components/WeaponDetectionImageUpload";
 
-function App() {
+export default function App() {
+  const [showDetection, setShowDetection] = useState(false);
+
+  const [settings, setSettings] = useState({
+    sensitivity: 70,
+    recipientEmail: "",
+    coolOff: 1.0,
+    weaponDetection: true,
+    personAlert: true,
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6">
+      {!showDetection ? (
+        <MainMenu settings={settings} setSettings={setSettings} onStart={() => setShowDetection(true)} />
+      ) : (
+        <WeaponDetectionHighAccuracy {...settings} />
+      )}
     </div>
   );
 }
-
-export default App;

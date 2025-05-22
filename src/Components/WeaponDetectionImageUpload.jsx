@@ -10,7 +10,7 @@ const WeaponDetectionHighAccuracy = ({sensitivity, recipientEmail, weaponDetecti
   const [loading, setLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const lastEmailTimeRef = useRef(0); // ✅ useRef instead of useState
-  console.log(sensitivity, recipientEmail, weaponDetection, personAlert, coolOff);
+  // console.log(sensitivity, recipientEmail, weaponDetection, personAlert, coolOff);
 
   useEffect(() => {
     const startWebcam = async () => {
@@ -67,7 +67,7 @@ const WeaponDetectionHighAccuracy = ({sensitivity, recipientEmail, weaponDetecti
       if (weapon && weaponDetection && now - lastEmailTimeRef.current > coolOff * 60 * 1000) {
   lastEmailTimeRef.current = now; // ✅ SET FIRST TO BLOCK IMMEDIATE DUPLICATES
   await sendEmailAlert({
-    toEmail: 'alishah69.ah@gmail.com',
+    toEmail: recipientEmail,
     subject: "Weapon Detected Alert",
     message: `A weapon was detected with ${Math.round(weapon.confidence * 100)}% confidence.`,
   });
@@ -76,7 +76,7 @@ const WeaponDetectionHighAccuracy = ({sensitivity, recipientEmail, weaponDetecti
 if (person && personAlert && now - lastEmailTimeRef.current > coolOff * 60 * 1000) {
   lastEmailTimeRef.current = now; // ✅ SET FIRST TO BLOCK IMMEDIATE DUPLICATES
   await sendEmailAlert({
-    toEmail: 'alishah69.ah@gmail.com',
+    toEmail: recipientEmail,
     subject: "Person Detected Alert",
     message: `A person was detected with ${Math.round(person.confidence * 100)}% confidence.`,
   });
